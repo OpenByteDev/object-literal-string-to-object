@@ -3,7 +3,7 @@ Start = _ object:Object _ { return object; }
 Object = '{' _ propertyList:PropertyList? _ '}' { return propertyList; }
 
 VariableName = $ ([A-Za-z_] / Digit)+
-Value = String / Number / Undefined / Null / Object / Array
+Value = String / Number / Undefined / Null / Boolean / Object / Array
 
 PropertyList = first:Property other:PropertyWithPrependComma* _ ','? {
 	const obj = {};
@@ -37,6 +37,10 @@ ValueWithPrependComma = _ ',' _ value:Value { return value; }
 Undefined = 'undefined' { return undefined; }
 Null = 'null' { return null; }
 
+Boolean = True / False
+True = 'true' { return true; }
+False = 'false' { return false; }
+
 String = Doublequote content:$ DoublequoteChar* Doublequote { return content; }
 	     / Singlequote content:$ SinglequoteChar* Singlequote { return content; }
 	     / Backtick content:$ BacktickChar* Backtick { return content; }
@@ -56,7 +60,7 @@ BacktickChar = Backslash Backtick
      / Backslash 'u' Hex Hex Hex Hex
      / (!Backtick .)
 
-Number = $ ('0' / [1-9] $ Digit* ('.' $ Digit*)?)
+Number = integer:$Digit+ decimal:$('.' $Digit*)? { return Number(integer + (decimal || '')) }
 Digit = [0-9]
 Hex = [0-9A-Fa-f]
 
