@@ -170,7 +170,7 @@ function peg$parse(input, options) {
       peg$c16 = peg$literalExpectation("[", false),
       peg$c17 = "]",
       peg$c18 = peg$literalExpectation("]", false),
-      peg$c19 = function(items) { return items; },
+      peg$c19 = function(items) { return items || []; },
       peg$c20 = function(first, other) {
       	const arr = [];
           if (first)

@@ -22,7 +22,7 @@ PropertyWithPrependComma = _ ',' _ property:Property { return property; }
 Property = key:PropertyName _ ':' _ value:Value { return { 'key': key, 'value': value }; }
 PropertyName = String / VariableName
 
-Array = '[' _ items:ArrayItemList? _ ']' { return items; }
+Array = '[' _ items:ArrayItemList? _ ']' { return items || []; }
 ArrayItemList = first:Value other:ValueWithPrependComma* _ ','? {
 	const arr = [];
     if (first)
