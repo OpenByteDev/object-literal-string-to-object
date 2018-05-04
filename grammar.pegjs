@@ -1,4 +1,6 @@
-Start = _ object:Object _ { return object; }
+Start = _ root:Root _ { return root; }
+
+Root = Object / Array
 
 Object = '{' _ propertyList:PropertyList? _ '}' { return propertyList; }
 

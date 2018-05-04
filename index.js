@@ -141,7 +141,7 @@ function peg$parse(input, options) {
       peg$startRuleFunctions = { Start: peg$parseStart },
       peg$startRuleFunction  = peg$parseStart,
 
-      peg$c0 = function(object) { return object; },
+      peg$c0 = function(root) { return root; },
       peg$c1 = "{",
       peg$c2 = peg$literalExpectation("{", false),
       peg$c3 = "}",
@@ -362,7 +362,7 @@ function peg$parse(input, options) {
     s0 = peg$currPos;
     s1 = peg$parse_();
     if (s1 !== peg$FAILED) {
-      s2 = peg$parseObject();
+      s2 = peg$parseRoot();
       if (s2 !== peg$FAILED) {
         s3 = peg$parse_();
         if (s3 !== peg$FAILED) {
@@ -380,6 +380,17 @@ function peg$parse(input, options) {
     } else {
       peg$currPos = s0;
       s0 = peg$FAILED;
+    }
+
+    return s0;
+  }
+
+  function peg$parseRoot() {
+    var s0;
+
+    s0 = peg$parseObject();
+    if (s0 === peg$FAILED) {
+      s0 = peg$parseArray();
     }
 
     return s0;
